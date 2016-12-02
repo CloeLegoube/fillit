@@ -6,13 +6,16 @@
 /*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 11:13:24 by clegoube          #+#    #+#             */
-/*   Updated: 2016/11/17 21:15:21 by clegoube         ###   ########.fr       */
+/*   Updated: 2016/12/02 19:58:08 by clegoube         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 22
+# define TAB ((char**)(list->content))[x][y]
+# define COOR ((char**)(list->content))[line][col]
+
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -39,6 +42,14 @@ typedef	struct	s_var
 	int				lettre;
 	struct s_var	*next;
 }				t_var;
+
+typedef	struct	s_coor
+{
+	char			 	letter;
+	int					*x;
+	int					*y;
+	struct s_coor	*next;
+}				t_coor;
 
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
@@ -105,5 +116,20 @@ void			ft_swap(int *a, int *b);
 int				ft_str_is_lowercase(char *str);
 int				ft_str_is_uppercase(char *str);
 int				ft_read(int argc, char **argv);
+int				ft_checkfile(t_list *list, char *buff);
+int				ft_transform_letter(t_list *list);
+int				ft_move(t_list *list);
+int				ft_checkconnexion(char **tab, size_t x, size_t y);
+char			**ft_remove_star(t_list *list);
+int				ft_transform_point(t_list *list);
+int				ft_checkconnexion_point(char **tab, size_t x, size_t y);
+int				ft_transform_point_line(t_list *list);
+int				ft_transform_point_col(t_list *list);
+void			ft_stock_struct(t_list *list, char ** tab);
+void			ft_solve(t_list *list);
+void			del(void *content, size_t content_size);
+t_list 			*ft_coordo(t_list *list);
+void			ft_lstadd_end(t_list **alst, t_list *new);
+int 			*ft_first_coordo(t_list *list);
 
 #endif

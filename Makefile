@@ -6,19 +6,20 @@
 #    By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/15 16:15:02 by clegoube          #+#    #+#              #
-#    Updated: 2016/11/17 21:12:54 by clegoube         ###   ########.fr        #
+#    Updated: 2016/12/02 19:58:19 by clegoube         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	fillit
-SRC =	fillit.c ft_readfile.c
+SRC =	fillit.c ft_readfile.c ft_checkfile.c \
+		ft_stock.c ft_solve.c ft_coordo.c
 HEADER = libft.h
 
 
 SRCO	= $(SRC:%.c=%.o)
 
 FLAGS =	-Wall -Werror -Wextra
-CC =	@gcc
+CC =	@gcc -g3
 
 all: $(NAME)
 
