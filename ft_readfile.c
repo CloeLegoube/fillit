@@ -6,7 +6,7 @@
 /*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:55:55 by clegoube          #+#    #+#             */
-/*   Updated: 2016/12/02 19:55:45 by clegoube         ###   ########.fr       */
+/*   Updated: 2016/12/04 11:36:29 by clegoube         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,16 @@ int	ft_read(int argc, char **argv)
 {
 	int		fd;
 	int		ret;
+	size_t	loop;
+	size_t	i;
 	t_list	*list;
 	t_list	*new;
 	t_list	*coor;
 	char	buff[BUFF_SIZE + 1];
 
+	loop = 0;
 	list = NULL;
+	coor = NULL;
 	if ((argc < 2) || (argc > 2))
 		ft_putstr("usage : ./fillit source_file\n");
 	if (argc == 2)
@@ -54,7 +58,24 @@ int	ft_read(int argc, char **argv)
 		if (ft_checkfile(list, buff) != 1)
 			exit(1);
 		coor  = ft_coordo(list);
-		ft_solve(coor);
+		while (coor)
+		{
+			i = 0;
+			printf("letter_read : %c\n", ((t_coor *)(coor->content))->letter);
+			printf("size : %zu\n", ((t_coor *)(coor->content))->size);
+			while (i < 4)
+			{
+				printf("x : %d - ", ((t_coor *)(coor->content))->x[i]);
+				printf("y : %d \n", ((t_coor *)(coor->content))->y[i]);
+				i++;
+			}
+			printf("\n");
+
+			coor = coor->next;
+		}
+
+
+		ft_solve(coor, loop);
 
 
 		// while (list)

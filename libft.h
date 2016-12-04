@@ -6,7 +6,7 @@
 /*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/15 11:13:24 by clegoube          #+#    #+#             */
-/*   Updated: 2016/12/02 19:58:08 by clegoube         ###   ########.fr       */
+/*   Updated: 2016/12/04 11:04:23 by clegoube         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef	struct	s_coor
 	char			 	letter;
 	int					*x;
 	int					*y;
+	size_t				size;
 	struct s_coor	*next;
 }				t_coor;
 
@@ -126,10 +127,11 @@ int				ft_checkconnexion_point(char **tab, size_t x, size_t y);
 int				ft_transform_point_line(t_list *list);
 int				ft_transform_point_col(t_list *list);
 void			ft_stock_struct(t_list *list, char ** tab);
-void			ft_solve(t_list *list);
+char			**ft_solve(t_list *list, size_t loop);
 void			del(void *content, size_t content_size);
 t_list 			*ft_coordo(t_list *list);
 void			ft_lstadd_end(t_list **alst, t_list *new);
 int 			*ft_first_coordo(t_list *list);
+char			**ft_grid(size_t loop);
 
 #endif
