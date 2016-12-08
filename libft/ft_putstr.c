@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stock.c                                         :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjaouen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/01 18:11:32 by clegoube          #+#    #+#             */
-/*   Updated: 2016/12/01 18:23:57 by clegoube         ###   ########.fr       */
+/*   Created: 2016/11/04 18:15:53 by jjaouen           #+#    #+#             */
+/*   Updated: 2016/11/09 20:31:50 by jjaouen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void ft_stock_struct(t_list *list, char ** tab)
+#include "libft.h"
+
+void	ft_putstr(char const *s)
 {
 	int		i;
-	t_list	*new;
 
 	i = 0;
-	new = list;
-	while (tab[i])
+	if (!(s))
+		return ;
+	while (s[i] != '\0')
 	{
-		(*list).content = ft_strsplit(tab[i], '*');
-		list = list->next;
+		ft_putchar(s[i]);
 		i++;
 	}
-	list = new;
-	// while (list)
-	// {
-	// 	ft_print_words_tables((char **)(list->content));
-	// 	list = list->next;
-	// }
 }

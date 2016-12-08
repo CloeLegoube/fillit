@@ -1,17 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjaouen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/15 16:41:06 by clegoube          #+#    #+#             */
-/*   Updated: 2016/11/17 21:15:55 by clegoube         ###   ########.fr       */
+/*   Created: 2016/11/15 19:22:29 by jjaouen           #+#    #+#             */
+/*   Updated: 2016/11/15 21:40:52 by jjaouen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+void	ft_lstadd(t_list **alst, t_list *new)
 {
-	ft_read(argc, argv);
-	return (0);
+	if (new != NULL && alst != NULL)
+	{
+		new->next = *alst;
+		*alst = new;
+	}
 }

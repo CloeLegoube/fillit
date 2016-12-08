@@ -3,74 +3,42 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+         #
+#    By: jjaouen <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/15 16:15:02 by clegoube          #+#    #+#              #
-#    Updated: 2016/12/02 19:58:19 by clegoube         ###   ########.fr        #
+#    Created: 2016/12/07 16:55:10 by jjaouen           #+#    #+#              #
+#    Updated: 2016/12/07 18:04:30 by jjaouen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =	fillit
-SRC =	fillit.c ft_readfile.c ft_checkfile.c \
-		ft_stock.c ft_solve.c ft_coordo.c
-HEADER = libft.h
+GCCF = gcc -Wall -Wextra -Werror
 
+NAME=fillit
 
-SRCO	= $(SRC:%.c=%.o)
+HEAD = fillit.h
 
-FLAGS =	-Wall -Werror -Wextra
-CC =	@gcc -g3
+SRC = main.c ft_readfile.c ft_checkfile.c ft_solve.c ft_coordo.c
+
+LIB = ./libft/libft.a
+
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME) :
-		$(CC) -o $(NAME) $(FLAGS) $(SRC) -include $(HEADER) libft.a
+$(NAME): $(OBJ)
+	Make -C ./libft/
+	$(GCCF) $(SRC) $(LIB) -I $(HEAD) -o $(NAME)
 
-clean :
-		@rm -f $(SRCO)
+%.o: %.c
+	$(GCCF) -c $<
 
-fclean : clean
-		@rm -f $(NAME)
+clean:
+	Make clean -C ./libft/
+	rm -Rf $(OBJ)
 
-re : fclean all
+fclean: clean
+	rm -rf $(LIB)
+	rm -rf $(NAME)
 
-.PHONY: clean
+re: fclean all
 
-#Pensez a retirer cette commande
-run: re
-	@echo "COMPILED"
-	@./fillit extern_file.txt
-
-
-
-# NAME =	fillit
-# OBJ =	fillit.o ft_readfile.o
-# HEADER = libft.h
-#
-# CC = gcc
-# CFLAGS = -Wall -Wextra -Werror
-#
-# all : $(NAME)
-#
-# $(NAME) : $(OBJ)
-# 	ar rc libft.a $(OBJ) && ranlib libft.a
-#
-# %.o: %.c
-# 	$(CC) -o $(NAME) $(CFLAGS) -c $^ -include $(HEADER)
-#
-# clean :
-# 	@rm -f $(OBJ)
-#
-# fclean : clean
-# 	@rm -f $(NAME)
-#
-# re : fclean all
-#
-# .PHONY : clean
-#
-# #Pensez a retirer cette commande
-# run: re
-# 	@echo "COMPILED"
-# 	@./fillit extern_file.txt
-#
-#
+.PHONY: all clean

@@ -6,65 +6,116 @@
 /*   By: clegoube <clegoube@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 18:16:37 by clegoube          #+#    #+#             */
-/*   Updated: 2016/12/04 11:30:32 by clegoube         ###   ########.fr       */
+/*   Updated: 2016/12/06 22:13:42 by jjaouen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	**ft_grid(size_t loop)
+#include "fillit.h"
+
+char	**ft_grid(t_list *list, size_t loop)
 {
 	char	**grid;
 	size_t	j;
 	size_t	h;
 
 	h = 0;
-	// j = ft_count_list(list);
-	j = 5;
-	if (j == 1)
+	j = ft_count_list(list) * 4;
+	while (ft_sqrt(j) == 0)
+		j--;
+	if (j > 0 && j < 4)
 		loop++;
 	grid = (char**)malloc(sizeof(char*) * (j + loop + 1));
-	while (h < (j + loop))
+	while (h < (ft_sqrt(j) + loop))
 	{
-		grid[h] = (char*)malloc(sizeof(char) * (j + loop));
-		grid[h] = ft_memset((char*)grid[h], '.', (j + loop));
-		grid[h++][j + loop + 1] = '\0';
+		grid[h] = (char*)malloc(sizeof(char) * (ft_sqrt(j) + loop));
+		grid[h] = ft_memset((char*)grid[h], '.', (ft_sqrt(j) + loop));
+		grid[h++][ft_sqrt(j) + loop + 1] = '\0';
 	}
-	ft_print_words_tables(grid);
 	return (grid);
 }
 
-char	**ft_solve(t_list *list, size_t loop)
+char	**ft_loop(t_list *coor, size_t loop)
 {
 	char	**grid;
-	size_t	i;
-	// size_t	j;
 
-	grid = NULL;
-	i = 0;
-	if (loop == 0)
-		grid = ft_grid(loop);
-//	while (i < 3)
-//	{
-//		loop++;
-//		ft_grid(list, loop);
-//		printf("\n");
-//		i++;
-//	}
-	while (list)
+	grid = ft_grid(coor, loop);
+	while (!ft_solve(coor, grid))
 	{
-		i = 0;
-		printf("letter_solve : %c\n", ((t_coor *)(list->content))->letter);
-		printf("size : %zu\n", ((t_coor *)(list->content))->size);
-		while (i < 4)
-		{
-			printf("x : %d - ", ((t_coor *)(list->content))->x[i]);
-			printf("y : %d \n", ((t_coor *)(list->content))->y[i]);
-			i++;
-		}
-		printf("\n");
-
-		list = list->next;
+		loop++;
+		free(grid);
+		grid = ft_grid(coor, loop);
 	}
-
-	//ft_solve(list, loop);
 	return (grid);
+}
+
+int		ft_place_if(char **grid, int i, int j, t_list *coor)
+{
+	int		*tmpx;
+	int		*tmpy;
+	int		h;
+
+	tmpx = CONTENT->x;
+	tmpy = CONTENT->y;
+	h = 0;
+	while (h < 4)
+	{
+		if (grid[i + tmpx[h]][j + tmpy[h]] != '.')
+			return (0);
+		h++;
+	}
+	return (1);
+}
+
+int		ft_place(t_list *coor, char **grid, int i, int j)
+{
+	int		*tmpx;
+	int		*tmpy;
+	size_t	size;
+	int		h;
+
+	size = ft_strlen(*grid);
+	h = -1;
+	if (grid[i][j] != '.')
+		return (0);
+	tmpx = CONTENT->x;
+	tmpy = CONTENT->y;
+	while (++h < 4)
+	{
+		if (i + tmpx[h] >= (int)size)
+			return (0);
+		if (j + tmpy[h] >= (int)size)
+			return (0);
+	}
+	if (ft_place_if(grid, i, j, coor) == 0)
+		return (0);
+	h = -1;
+	while (++h < 4)
+		grid[i + tmpx[h]][j + tmpy[h]] = CONTENT->letter;
+	return (1);
+}
+
+int		ft_solve(t_list *coor, char **grid)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	if (coor == NULL)
+		return (1);
+	while (grid[i])
+	{
+		j = 0;
+		while (grid[i][j])
+		{
+			if (ft_place(coor, grid, i, j))
+			{
+				if (ft_solve(coor->next, grid))
+					return (1);
+				ft_backup(grid, coor, i, j);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
